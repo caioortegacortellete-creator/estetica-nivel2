@@ -359,6 +359,63 @@
   .topo-voltar.mostrar { opacity: 1; visibility: visible; transform: none; }
   .topo-voltar svg { width: 16px; height: 16px; fill: none; stroke: var(--rose); stroke-width: 2; }
 
+  /* ---------- Acabamento (nível 2): detalhes de marca, sem efeitos ligados à rolagem ou ao mouse ---------- */
+  /* as fotos do topo respiram devagar */
+  @keyframes respirar { from { transform: scale(1); } to { transform: scale(1.07); } }
+  .arco img { animation: respirar 14s ease-in-out infinite alternate; }
+  .arco-lado:last-child img { animation-delay: -7s; }
+  /* rótulos com o oval da marca */
+  .rotulo { display: inline-flex; align-items: center; gap: 10px; }
+  .rotulo::before { content: ""; width: 9px; height: 13px; border: 1.3px solid currentColor; border-radius: 50%; flex-shrink: 0; }
+  /* equipe: contorno rosé atrás da foto, que se encaixa ao passar o mouse */
+  .membro { position: relative; }
+  .membro .foto-membro { overflow: visible; background: none; }
+  .membro .foto-membro::before { content: ""; position: absolute; inset: 0; border: 1px solid rgba(229,185,166,.55); border-radius: 50%; transform: translate(12px, 10px) rotate(6deg); transition: transform .8s var(--suave); }
+  .membro:hover .foto-membro::before { transform: none; }
+  .membro .foto-membro img { position: relative; border-radius: 50%; background: var(--ameixa-escuro); }
+  /* depoimentos: aspas grandes, o primeiro em destaque e cartões que sobem de leve */
+  .depo { position: relative; overflow: hidden; border: 1px solid transparent; transition: transform .5s var(--suave), box-shadow .5s var(--suave), border-color .3s; }
+  .depo::before { content: "\201C"; position: absolute; right: 22px; top: -14px; font-family: var(--serif); font-size: 150px; line-height: 1; color: var(--rose); opacity: .55; pointer-events: none; }
+  .depo:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(67,32,47,.12); border-color: var(--linha); }
+  .depo:first-child { background: var(--ameixa); }
+  .depo:first-child blockquote, .depo:first-child footer b { color: var(--claro); }
+  .depo:first-child footer span { color: var(--claro-suave); }
+  .depo:first-child .estrelas { color: var(--rose); }
+  .depo:first-child .avatar { background: var(--rose); color: var(--ameixa-escuro); }
+  .depo .avatar { box-shadow: 0 0 0 3px var(--nude-alt), 0 0 0 4px rgba(164,97,79,.35); }
+  .depo:first-child .avatar { box-shadow: 0 0 0 3px var(--ameixa), 0 0 0 4px rgba(229,185,166,.5); }
+  /* faixa de convite com foto, antes do contato */
+  .convite { position: relative; padding: 0; min-height: 520px; display: flex; align-items: center; overflow: hidden; color: var(--claro); background: var(--ameixa-escuro); }
+  .convite img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .convite::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(39,17,27,.92) 0%, rgba(39,17,27,.72) 45%, rgba(39,17,27,.25) 100%); }
+  .convite .container { position: relative; z-index: 2; padding-top: 96px; padding-bottom: 96px; }
+  .convite .rotulo { color: var(--rose); }
+  .convite h2 { max-width: 13em; margin-bottom: 22px; }
+  .convite h2 em { color: var(--rose); }
+  .convite p:not(.rotulo) { max-width: 31rem; color: var(--claro-suave); font-size: 19px; margin-bottom: 32px; }
+  .convite .oval-deco { position: absolute; z-index: 1; right: 8%; top: 50%; width: 260px; height: 380px; margin-top: -190px; border: 1px solid rgba(229,185,166,.55); border-radius: 50%; transform: rotate(-8deg); pointer-events: none; }
+  /* mapa nas cores da marca, com cartão do endereço */
+  .mapa-faixa iframe { filter: grayscale(1) sepia(.28) hue-rotate(-25deg) saturate(.9) contrast(.96) brightness(1.02); }
+  .mapa-cartao { position: absolute; z-index: 2; right: max(24px, calc((100vw - 1180px) / 2 + 24px)); top: 50%; transform: translateY(-50%); background: var(--nude); color: var(--texto); border-radius: 6px; padding: 26px 28px; max-width: 320px; box-shadow: 0 24px 50px rgba(39,17,27,.28); }
+  .mapa-cartao b { display: block; font-family: var(--serif); font-weight: 400; font-size: 29px; line-height: 1.1; color: var(--ameixa); margin-bottom: 8px; }
+  .mapa-cartao p { font-size: 15px; color: var(--texto-suave); margin-bottom: 16px; }
+  .mapa-cartao a { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--ameixa); text-decoration: none; }
+  .mapa-cartao a svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; transition: transform .2s; }
+  .mapa-cartao a:hover svg { transform: translateX(4px); }
+  /* rodapé com o nome grande da marca */
+  .rodape { position: relative; overflow: hidden; }
+  .rodape-nome { font-family: var(--serif); font-weight: 300; font-style: italic; font-size: clamp(120px, 22vw, 320px); line-height: .8; letter-spacing: -.03em; color: rgba(229,185,166,.08); text-align: center; margin: -10px 0 -.12em; user-select: none; pointer-events: none; }
+  @media (max-width: 860px) {
+    .convite { min-height: 0; }
+    .convite::before { background: linear-gradient(180deg, rgba(39,17,27,.6) 0%, rgba(39,17,27,.92) 70%); }
+    .convite .container { padding-top: 260px; padding-bottom: 72px; }
+    .convite .oval-deco { display: none; }
+    .mapa-faixa { height: auto; display: flex; flex-direction: column-reverse; }
+    .mapa-faixa iframe { position: relative; height: 280px; }
+    .mapa-cartao { position: static; transform: none; max-width: none; border-radius: 0; box-shadow: none; }
+    .membro .foto-membro::before { transform: translate(8px, 7px) rotate(5deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .js .revelar { opacity: 1; transform: none; }
@@ -708,6 +765,17 @@
     </div>
   </section>
 
+  <section class="convite" aria-labelledby="convite-titulo">
+    <img src="https://images.unsplash.com/photo-1706795033728-9232ef548a16?w=1800&q=75&auto=format&fit=crop" alt="" loading="lazy">
+    <span class="oval-deco" aria-hidden="true"></span>
+    <div class="container">
+      <p class="rotulo revelar">Sua avaliação</p>
+      <h2 class="revelar" id="convite-titulo">Sua pele merece uma <em>conversa sem pressa.</em></h2>
+      <p class="revelar">Conte o que incomoda e marque um horário. A gente olha, explica e só indica o que fizer sentido para você.</p>
+      <a class="btn revelar" href="#contato"><svg><use href="#i-whats"/></svg> Quero agendar minha avaliação</a>
+    </div>
+  </section>
+
   <section class="contato escuro" id="contato">
     <div class="container">
       <div class="contato-info">
@@ -764,6 +832,11 @@
     </div>
   </section>
   <div class="mapa-faixa">
+    <div class="mapa-cartao">
+      <b>Clínica Alba</b>
+      <p>Av. Brasil, 0000 · Sala 00<br>Centro, Cascavel/PR</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=Av.%20Brasil%2C%20Cascavel%2C%20PR" target="_blank" rel="noopener">Como chegar <svg><use href="#i-seta"/></svg></a>
+    </div>
     <iframe src="https://maps.google.com/maps?q=Cascavel%2C%20PR&z=14&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa da clínica"></iframe>
   </div>
 </main>
@@ -788,6 +861,7 @@
       <ul><li>(45) 99999-9999</li><li>contato@clinicaalba.com.br</li><li>Av. Brasil, 0000</li><li>Seg a sex, 9h às 19h · Sáb, 9h às 13h</li></ul>
     </div>
   </div>
+  <p class="rodape-nome" aria-hidden="true">Alba</p>
   <div class="rodape-base">
     <div class="container"><span>© 2026 Clínica Alba · CNPJ 00.000.000/0001-00</span><span>Imagens ilustrativas. Os resultados variam de pessoa para pessoa.</span></div>
   </div>
